@@ -3,43 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desafío Harry Potter</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Desafío Harry Potter para Emilie</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Roboto:wght@400;700&display=swap">
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a, #2c3e50);
+            color: #fff;
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #1a1a40, #3a2d6f);
-            text-align: center;
-            color: white;
+            overflow: hidden;
         }
+
         .container {
-            background: rgba(255, 255, 255, 0.1);
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
             padding: 20px;
             border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
             max-width: 90%;
-            backdrop-filter: blur(10px);
+            width: 100%;
+            animation: fadeIn 1s ease-in-out;
         }
+
+        h1, h2 {
+            font-family: 'Cinzel Decorative', cursive;
+            color: #ffd700;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
         button {
-            background: #d4af37;
-            color: white;
+            background: #ffd700;
+            color: #1a1a1a;
             border: none;
-            padding: 12px 24px;
+            padding: 10px 20px;
+            font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 10px;
-            font-weight: bold;
+            transition: background 0.3s ease;
         }
+
         button:hover {
-            background: #b8860b;
+            background: #e6b800;
         }
+
+        #optionsContainer button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 15px;
+            font-size: 16px;
+            background: #2c3e50;
+            color: #fff;
+            border: 2px solid #ffd700;
+            border-radius: 10px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        #optionsContainer button:hover {
+            background: #34495e;
+            transform: scale(1.05);
+        }
+
         .hidden {
             display: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .heart {
+            color: #ff4d4d;
+            font-size: 24px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .romantic-text {
+            font-size: 20px;
+            color: #ffd700;
+            margin-top: 20px;
+        }
+
+        .romantic-text span {
+            color: #ff4d4d;
         }
     </style>
 </head>
@@ -51,6 +114,7 @@
         <h1>Hola Emilie, Bienvenida al Desafío de Harry Potter</h1>
         <p>Si respondes 8 de 10 preguntas correctamente, podrás elegir tu premio.
         Si no lo logras... Me gano un beso. 😘</p>
+        <p class="romantic-text">Espero que disfrutes este pequeño juego que hice especialmente para ti. <span class="heart">❤️</span></p>
         <button id="startGame">¡Jugar!</button>
     </div>
     
@@ -64,7 +128,7 @@
     <div class="container hidden" id="resultScreen">
         <h2 id="resultMessage"></h2>
         <p id="resultDetail"></p>
-        <p>Espero te haya gustado 💖.</p>
+        <p class="romantic-text">Espero te haya gustado, Emi. <span class="heart">💖</span></p>
         <p>Mandame captura, no me hagas trampa.</p>
     </div>
     
@@ -78,7 +142,7 @@
             { q: "Cuál es el ingrediente principal de la poción multijugos?", options: ["Los dientes de un vampiro", "Sangre de la persona", "El pelo de la persona en la que quieres transformarte"], correct: 2 },
             { q: "¿Qué criatura tiene sangre plateada?", options: ["Hipogrifo", "Unicornio", "Testral"], correct: 1 },
             { q: "Cómo se llama el mapa mágico que muestra toda la distribución de Hogwarts?", options: ["Mapa de Felix Felicis", "Mapa del Merodeador", "Mapa de Hogwarts"], correct: 1 },
-            { q: "¿Cuál es la varita más poderosa del mundo mágico?", options: ["Varita de Saúco", "Varita de Draco Malfoy", "Varita de Voldemort"], correct: 0 },
+            { q: "¿Cuál es el nombre del búho de Harry?", options: ["Hedwig", "Scabbers", "Target"], correct: 0 },
             { q: "Cuál es el patronus de Harry?", options: ["Conejo", "Ciervo", "Lobo"], correct: 1 }
         ];
         
