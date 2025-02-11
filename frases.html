@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafío Harry Potter</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #1a1a40, #3a2d6f);
+            text-align: center;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+            backdrop-filter: blur(10px);
+        }
+        button {
+            background: #d4af37;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #b8860b;
+        }
+        .hidden {
+            display: none;
+        }
+        #result {
+            font-size: 9px;
+        }
+    </style>
+</head>
+<body>
+    <audio id="bg-music" loop>
+        <source src="harrypotter.mp3" type="audio/mp3">
+    </audio>
+    <div class="container" id="startScreen">
+        <h1>Hola Emilie, Bienvenida al Desafío de Harry Potter</h1>
+        <p>Si respones 7 de 10 preguntas correctamente y podrás elegir tu premio.
+        Si no lo logras... Me gano un beso. 😘</p>
+        <button id="startGame">¡Jugar!</button>
+    </div>
+    
+    <div class="container hidden" id="quizScreen">
+        <h2>Pregunta <span id="questionNumber">1</span>/10</h2>
+        <p id="questionText"></p>
+        <div id="optionsContainer"></div>
+        <button id="nextQuestion" class="hidden">Siguiente</button>
+    </div>
+    
+    <div class="container hidden" id="resultScreen">
+        <h2 id="resultMessage"></h2>
+        <p id="resultDetail"></p>
+        <P id="result" >Mendame la captura, no me hagas trampa.</P>
+    </div>
+    
+    <script>
+        const questions = [
+            { q: "¿Cuál es el segundo nombre de Albus Dumbledore?", options: ["Brian", "Percival", "Wulfric"], correct: 2 },
+            { q: "¿Cuál es la profesión de los padres de Hermione?", options: ["Dentistas", "Abogados", "Médicos"], correct: 0 },
+            { q: "¿Qué posición juega Harry en el equipo de Quidditch?", options: ["Golpeador", "Cazador", "Buscador"], correct: 2 },
+            { q: "¿Cuál es la varita más poderosa del mundo mágico?", options: ["Varita de Saúco", "Varita de Draco Malfoy", "Varita de Voldemort"], correct: 0 },
+            { q: "¿Cómo se llama el elfo doméstico que ayuda a Harry?", options: ["Dobby", "Kreacher", "Winky"], correct: 0 },
+            { q: "¿Quién es el heredero de Slytherin?", options: ["Harry Potter", "Tom Riddle", "Draco Malfoy"], correct: 1 },
+            { q: "¿Qué animal representa a Ravenclaw?", options: ["Águila", "Serpiente", "Tejón"], correct: 0 },
+            { q: "¿Cuál es el Patronus de Luna Lovegood?", options: ["Liebre", "Nutria", "Ciervo"], correct: 0 },
+            { q: "¿Qué objeto permite viajar en el tiempo?", options: ["Giratiempo", "Pensadero", "Ojo de Águila"], correct: 0 },
+            { q: "¿Cómo se llama el hermano de Dumbledore?", options: ["Aberforth", "Grindelwald", "Newt"], correct: 0 }
+        ];
+        
+        let currentQuestion = 0;
+        let correctAnswers = 0;
+
+        document.getElementById("startGame").addEventListener("click", () => {
+            document.getElementById("bg-music").play();
+            document.getElementById("startScreen").classList.add("hidden");
+            document.getElementById("quizScreen").classList.remove("hidden");
+            showQuestion();
+        });
+
+        function showQuestion() {
+            const questionData = questions[currentQuestion];
+            document.getElementById("questionNumber").textContent = currentQuestion + 1;
+            document.getElementById("questionText").textContent = questionData.q;
+            const optionsContainer = document.getElementById("optionsContainer");
+            optionsContainer.innerHTML = "";
+            questionData.options.forEach((option, index) => {
+                const btn = document.createElement("button");
+                btn.textContent = option;
+                btn.onclick = () => {
+                    if (index === questionData.correct) correctAnswers++;
+                    nextQuestion();
+                };
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById("quizScreen").classList.add("hidden");
+            document.getElementById("resultScreen").classList.remove("hidden");
+            if (correctAnswers >= 7) {
+                document.getElementById("resultMessage").textContent = "¡Me Ganaste! 🎉";
+                document.getElementById("resultDetail").textContent = "Podes elegir tu premio...";
+            } else {
+                document.getElementById("resultMessage").textContent = "¡Perdiste JAJA! 😈";
+                document.getElementById("resultDetail").textContent = "Me debes un beso.";
+            }
+        }
+    </script>
+</body>
+</html>
