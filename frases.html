@@ -41,9 +41,6 @@
         .hidden {
             display: none;
         }
-        #result {
-            font-size: 9px;
-        }
     </style>
 </head>
 <body>
@@ -52,7 +49,7 @@
     </audio>
     <div class="container" id="startScreen">
         <h1>Hola Emilie, Bienvenida al Desafío de Harry Potter</h1>
-        <p>Si respones 7 de 10 preguntas correctamente y podrás elegir tu premio.
+        <p>Si respondes 8 de 10 preguntas correctamente, podrás elegir tu premio.
         Si no lo logras... Me gano un beso. 😘</p>
         <button id="startGame">¡Jugar!</button>
     </div>
@@ -67,32 +64,42 @@
     <div class="container hidden" id="resultScreen">
         <h2 id="resultMessage"></h2>
         <p id="resultDetail"></p>
-        <P id="result" >Mendame la captura, no me hagas trampa.</P>
+        <p>Espero te haya gustado 💖.</p>
+        <p>Mandame captura, no me hagas trampa.</p>
     </div>
     
     <script>
         const questions = [
-            { q: "¿Cuál es el segundo nombre de Albus Dumbledore?", options: ["Brian", "Percival", "Wulfric"], correct: 2 },
-            { q: "¿Cuál es la profesión de los padres de Hermione?", options: ["Dentistas", "Abogados", "Médicos"], correct: 0 },
-            { q: "¿Qué posición juega Harry en el equipo de Quidditch?", options: ["Golpeador", "Cazador", "Buscador"], correct: 2 },
-            { q: "¿Cuál es la varita más poderosa del mundo mágico?", options: ["Varita de Saúco", "Varita de Draco Malfoy", "Varita de Voldemort"], correct: 0 },
-            { q: "¿Cómo se llama el elfo doméstico que ayuda a Harry?", options: ["Dobby", "Kreacher", "Winky"], correct: 0 },
-            { q: "¿Quién es el heredero de Slytherin?", options: ["Harry Potter", "Tom Riddle", "Draco Malfoy"], correct: 1 },
-            { q: "¿Qué animal representa a Ravenclaw?", options: ["Águila", "Serpiente", "Tejón"], correct: 0 },
-            { q: "¿Cuál es el Patronus de Luna Lovegood?", options: ["Liebre", "Nutria", "Ciervo"], correct: 0 },
+            { q: "¿Qué son los muggles?", options: ["Personas Normales", "Animales Mágicos", "Personas Mágicas"], correct: 2 },
             { q: "¿Qué objeto permite viajar en el tiempo?", options: ["Giratiempo", "Pensadero", "Ojo de Águila"], correct: 0 },
-            { q: "¿Cómo se llama el hermano de Dumbledore?", options: ["Aberforth", "Grindelwald", "Newt"], correct: 0 }
+            { q: "¿Cuál es el nombre completo de Voldemort?", options: ["Tom Marvolo Riddle", "Tom Elvis Riddle", "Tom Severus Riddle"], correct: 0 },
+            { q: "Cuál es el hechizo que se usa contra los dementores?", options: ["Expecto Patronum", "Expelliarmus", "Protego Maxima"], correct: 0 },
+            { q: "¿Cómo se llama el libro que Harry usa en 'El Príncipe Mestizo'?", options: ["Magia Avanzada", "Guía de Pociones", "Libro del Príncipe Mestizo"], correct: 2 },
+            { q: "¿Qué hechizo usa Dumbledore contra Voldemort en el Ministerio?", options: ["Expelliarmus", "Protego Maxima", "Fuego Maldito"], correct: 2 },
+            { q: "¿Qué criatura tiene sangre plateada?", options: ["Hipogrifo", "Unicornio", "Testral"], correct: 1 },
+            { q: "Cómo se llama el mapa mágico que muestra toda la distribución de Hogwarts?", options: ["Mapa de Felix Felicis", "Mapa del Merodeador", "Mapa de Hogwarts"], correct: 1 },
+            { q: "¿Cuál es la varita más poderosa del mundo mágico?", options: ["Varita de Saúco", "Varita de Draco Malfoy", "Varita de Voldemort"], correct: 0 },
+            { q: "¿Cuántos hermanos tiene Ron Weasley?", options: ["5", "6", "7"], correct: 1 }
         ];
         
         let currentQuestion = 0;
         let correctAnswers = 0;
 
-        document.getElementById("startGame").addEventListener("click", () => {
-            document.getElementById("bg-music").play();
+        // Verificar si ya jugó antes
+        const previousResult = localStorage.getItem("hp_quiz_result");
+        if (previousResult) {
             document.getElementById("startScreen").classList.add("hidden");
-            document.getElementById("quizScreen").classList.remove("hidden");
-            showQuestion();
-        });
+            document.getElementById("resultScreen").classList.remove("hidden");
+            document.getElementById("resultMessage").textContent = previousResult === "win" ? "¡Me Ganaste! 🎉" : "¡Perdiste JAJA! 😈";
+            document.getElementById("resultDetail").textContent = previousResult === "win" ? "Podes elegir tu premio..." : "Me debes un beso.";
+        } else {
+            document.getElementById("startGame").addEventListener("click", () => {
+                document.getElementById("bg-music").play();
+                document.getElementById("startScreen").classList.add("hidden");
+                document.getElementById("quizScreen").classList.remove("hidden");
+                showQuestion();
+            });
+        }
 
         function showQuestion() {
             const questionData = questions[currentQuestion];
@@ -123,13 +130,17 @@
         function showResult() {
             document.getElementById("quizScreen").classList.add("hidden");
             document.getElementById("resultScreen").classList.remove("hidden");
-            if (correctAnswers >= 7) {
+            let result;
+            if (correctAnswers >= 8) {
+                result = "win";
                 document.getElementById("resultMessage").textContent = "¡Me Ganaste! 🎉";
                 document.getElementById("resultDetail").textContent = "Podes elegir tu premio...";
             } else {
+                result = "lose";
                 document.getElementById("resultMessage").textContent = "¡Perdiste JAJA! 😈";
                 document.getElementById("resultDetail").textContent = "Me debes un beso.";
             }
+            localStorage.setItem("hp_quiz_result", result);
         }
     </script>
 </body>
